@@ -274,7 +274,31 @@ footer {
 
 /* --- 3. 모바일 반응형 스타일 --- */
 @media (max-width: 767px) {
-    .container { padding: 0 20px; }
-    .section-title { font-size: 2rem; }
-    .section-subtitle { font-size: 1rem; }
+    .container {
+        padding: 0 20px;
+    }
+    .section-title {
+        font-size: 2rem;
+    }
+    .section-subtitle {
+        font-size: 1rem;
+    }
+
+    /* ▼▼▼ 내비게이션 문제 해결을 위해 추가된 코드 ▼▼▼ */
+    header {
+        height: auto; /* 헤더 높이를 콘텐츠에 맞게 자동으로 조절합니다. */
+        padding: 5px 0; /* 메뉴가 두 줄이 될 경우를 대비해 상하 여백을 추가합니다. */
+    }
+
+    header nav ul {
+        flex-wrap: wrap; /* 메뉴 항목이 공간을 넘어가면 다음 줄로 자동 줄바꿈합니다. */
+        justify-content: center; /* 메뉴 항목들을 가운데 정렬합니다. */
+    }
+
+    header nav ul li a {
+        line-height: 1.8; /* 줄 높이를 조정해 가독성을 높입니다. */
+        padding: 5px 12px; /* 각 메뉴의 좌우 여백을 살짝 줄여 공간을 확보합니다. */
+        font-size: 13px; /* 모바일에서 글자 크기를 약간 줄입니다. */
+    }
+    /* ▲▲▲ 여기까지 추가된 코드 ▲▲▲ */
 }
