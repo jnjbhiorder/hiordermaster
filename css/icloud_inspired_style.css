@@ -1,0 +1,280 @@
+/* iCloud.com 스타일 기반 - icloud_style.css (통합 버전) */
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+:root {
+    --icloud-bg: #f8f8fa;
+    --icloud-card-bg: #ffffff;
+    --icloud-text-primary: #1d1d1f;
+    --icloud-text-secondary: #6e6e73;
+    --icloud-accent-blue: #007aff;
+    --icloud-border: #d2d2d7;
+    --header-height: 44px;
+}
+
+/* --- 1. 기본 및 공통 스타일 --- */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Pretendard Variable', Pretendard, Roboto, 'Noto Sans KR', 'Segoe UI', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
+    margin: 0;
+    background-color: var(--icloud-bg);
+    color: var(--icloud-text-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+a {
+    text-decoration: none;
+    color: var(--icloud-accent-blue);
+    transition: color 0.3s ease;
+}
+a:hover { text-decoration: underline; }
+
+.container {
+    max-width: 1100px; /* 콘텐츠 최대 너비 확장 */
+    margin: 0 auto;
+    padding: 0 40px;   /* 좌우 여백 추가 */
+    box-sizing: border-box;
+}
+
+header {
+    background-color: var(--icloud-card-bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: var(--header-height);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+    border-bottom: 1px solid var(--icloud-border);
+}
+
+header nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+header nav ul li a {
+    display: block;
+    padding: 0 16px;
+    line-height: var(--header-height);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--icloud-text-secondary);
+}
+header nav ul li a:hover,
+header nav ul li a.active {
+    color: var(--icloud-text-primary);
+    text-decoration: none;
+}
+
+main { padding-top: 50px; }
+footer {
+    text-align: center;
+    padding: 40px 20px;
+    margin-top: 60px;
+    color: var(--icloud-text-secondary);
+    font-size: 0.8rem;
+}
+
+.section {
+    padding: 20px 0;
+    text-align: center;
+    margin-bottom: 40px;
+}
+.section-title {
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+.section-subtitle {
+    font-size: 1.1rem;
+    color: var(--icloud-text-secondary);
+    margin-bottom: 40px;
+    line-height: 1.5;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.btn {
+    display: inline-block;
+    padding: 10px 24px;
+    background-color: var(--icloud-accent-blue);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.btn:hover {
+    background-color: #0070e0;
+    text-decoration: none;
+}
+.divider {
+    border: 0;
+    border-top: 1px solid var(--icloud-border);
+    margin: 60px auto;
+}
+.highlight {
+    background-color: #e5f1ff;
+    color: var(--icloud-accent-blue);
+    border-radius: 3px;
+    padding: 1px 3px;
+    font-weight: 600;
+}
+.back-link {
+    display: inline-block;
+    margin: 20px 0;
+    font-size: 1rem;
+    color: var(--icloud-accent-blue);
+}
+
+/* --- 2. 페이지별 스타일 --- */
+
+/* index.html & search.html 공통 */
+.search-container {
+    max-width: 680px;
+    margin: 40px auto 0;
+}
+.search-box input {
+    width: 100%;
+    padding: 15px 20px;
+    border: 1px solid var(--icloud-border);
+    border-radius: 10px;
+    font-size: 1rem;
+    background-color: var(--icloud-card-bg);
+    color: var(--icloud-text-primary);
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    box-sizing: border-box;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+.search-box input:focus {
+    border-color: var(--icloud-accent-blue);
+    box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.2);
+}
+
+/* index.html & voc.html 공통 */
+.filter-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 30px 0;
+    flex-wrap: wrap;
+}
+.filter-tab {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    background-color: transparent;
+    color: var(--icloud-text-secondary);
+    border: 1px solid transparent;
+}
+.filter-tab:hover { background-color: rgba(0,0,0,0.05); }
+.filter-tab.active {
+    color: var(--icloud-accent-blue);
+    background-color: #e5f1ff;
+    font-weight: 600;
+}
+
+/* index.html 전용 */
+.results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+.result-card {
+    background-color: var(--icloud-card-bg);
+    border-radius: 12px;
+    padding: 25px;
+    text-align: left;
+    border: 1px solid var(--icloud-border);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: flex;
+    flex-direction: column;
+    min-height: 200px;
+}
+.result-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+}
+.card-sub-category { font-size: 1.2rem; font-weight: 600; margin-bottom: 8px; }
+.card-item, .card-sub-item { font-size: 1rem; font-weight: 500; color: var(--icloud-text-secondary); margin-bottom: 15px; }
+.card-path { font-size: 0.8rem; color: var(--icloud-accent-blue); margin-top: auto; padding-top: 15px; border-top: 1px solid var(--icloud-border); word-break: break-all; }
+#noResultsMessage { padding: 40px; color: var(--icloud-text-secondary); }
+
+/* detail.html 전용 */
+.detail-card {
+    background-color: var(--icloud-card-bg);
+    border-radius: 12px;
+    padding: 30px 40px;
+    text-align: left;
+    border: 1px solid var(--icloud-border);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.detail-sub-category { font-size: 2rem; font-weight: 600; margin-bottom: 10px; }
+.detail-item { font-size: 1.5rem; font-weight: 500; margin-bottom: 10px; }
+.detail-sub-item { font-size: 1.1rem; color: var(--icloud-text-secondary); margin-bottom: 40px; }
+.detail-field-group { margin-bottom: 30px; }
+.detail-field-title { font-size: 0.9rem; font-weight: 600; color: var(--icloud-text-secondary); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.05em; }
+.detail-field-content { font-size: 1rem; color: var(--icloud-text-primary); line-height: 1.7; }
+.purpose-content { color: var(--icloud-accent-blue); font-weight: 500; }
+.detail-path { font-size: 0.9rem; color: var(--icloud-accent-blue); margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--icloud-border); word-break: break-all; }
+
+/* search.html 전용 */
+.result-item {
+    background-color: var(--icloud-card-bg);
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    border: 1px solid var(--icloud-border);
+}
+.result-item a { font-size: 1.1rem; font-weight: 600; color: var(--icloud-text-primary); text-decoration: none; }
+.result-item a:hover { color: var(--icloud-accent-blue); }
+.result-item .result-snippet { font-size: 0.95rem; color: var(--icloud-text-secondary); margin-top: 10px; padding-left: 10px; border-left: 3px solid var(--icloud-border); line-height: 1.6; }
+.result-item .result-link { font-size: 0.9rem; color: var(--icloud-accent-blue); margin-top: 10px; word-break: break-all; }
+
+/* voc.html 전용 */
+.voc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 20px; }
+.voc-card { background-color: var(--icloud-card-bg); border-radius: 12px; padding: 25px; text-align: left; border: 1px solid var(--icloud-border); }
+.voc-card .category { font-size: 1.2rem; font-weight: 600; margin-bottom: 15px; color: var(--icloud-accent-blue); }
+.voc-card .title { font-size: 0.9rem; font-weight: 600; color: var(--icloud-text-secondary); margin-bottom: 5px; text-transform: uppercase; }
+.voc-card .content { font-size: 1rem; color: var(--icloud-text-primary); line-height: 1.6; }
+.content-section { display: none; }
+.content-section.active { display: block; }
+
+/* materials.html 전용 */
+.materials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 40px; }
+.material-card { background-color: var(--icloud-card-bg); border-radius: 12px; padding: 25px; text-align: left; border: 1px solid var(--icloud-border); box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.3s, box-shadow 0.3s; display: flex; flex-direction: column; }
+.material-card:hover { transform: translateY(-4px); box-shadow: 0 6px 16px rgba(0,0,0,0.1); }
+.material-card .card-content { flex-grow: 1; }
+.material-card h3 { margin-top: 0; font-size: 1.3rem; font-weight: 600; color: var(--icloud-text-primary); margin-bottom: 10px; }
+.material-card p { font-size: 0.95rem; color: var(--icloud-text-secondary); line-height: 1.6; margin-bottom: 20px; }
+.material-card a.btn { display: block; width: 100%; text-align: center; flex-shrink: 0; box-sizing: border-box; }
+
+/* network_diagram.html 전용 */
+.diagram-container { background-color: var(--icloud-card-bg); border-radius: 12px; padding: 30px; margin-top: 40px; border: 1px solid var(--icloud-border); }
+.diagram-container img { max-width: 100%; border-radius: 10px; display: block; }
+.description-table { width: 100%; border-collapse: collapse; margin-top: 30px; font-size: 0.95rem; text-align: left; }
+.description-table th, .description-table td { padding: 15px; border-bottom: 1px solid var(--icloud-border); vertical-align: top; }
+.description-table tr:last-child th, .description-table tr:last-child td { border-bottom: none; }
+.description-table th { color: var(--icloud-text-primary); font-weight: 600; width: 25%; }
+.description-table td { color: var(--icloud-text-secondary); }
+.description-table ul { list-style-position: outside; padding-left: 20px; margin: 0; }
+.description-table li { margin-bottom: 5px; }
+
+/* --- 3. 모바일 반응형 스타일 --- */
+@media (max-width: 767px) {
+    .container { padding: 0 20px; }
+    .section-title { font-size: 2rem; }
+    .section-subtitle { font-size: 1rem; }
+}
