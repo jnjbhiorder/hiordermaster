@@ -272,6 +272,107 @@ footer {
 .description-table ul { list-style-position: outside; padding-left: 20px; margin: 0; }
 .description-table li { margin-bottom: 5px; }
 
+/* --- 게시판 스타일 추가 --- */
+.board-container {
+    margin-top: 40px;
+    background-color: var(--icloud-card-bg);
+    border-radius: 12px;
+    border: 1px solid var(--icloud-border);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    overflow: hidden;
+}
+
+.board-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.board-table th, .board-table td {
+    padding: 15px 20px;
+    border-bottom: 1px solid var(--icloud-border);
+}
+
+.board-table tr:last-child td {
+    border-bottom: none;
+}
+
+.board-table th {
+    background-color: #f9f9f9;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--icloud-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.board-header-no {
+    width: 10%;
+    text-align: center;
+}
+
+.board-header-title {
+    width: 90%;
+}
+
+.board-table td.board-no {
+    text-align: center;
+    color: var(--icloud-text-secondary);
+    font-size: 0.9rem;
+}
+
+.board-table td.board-title a {
+    color: var(--icloud-text-primary);
+    font-weight: 500;
+    text-decoration: none;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.board-table td.board-title a:hover {
+    color: var(--icloud-accent-blue);
+    text-decoration: underline;
+}
+
+/* --- 페이지네이션 스타일 수정 --- */
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.pagination-container button {
+    background-color: var(--icloud-card-bg);
+    border: 1px solid var(--icloud-border);
+    color: var(--icloud-text-primary);
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.3s, color 0.3s;
+    margin: 0 4px; /* 버튼 좌우 간격을 위해 margin 추가 */
+}
+
+.pagination-container button:hover:not(:disabled) {
+    background-color: #eef5ff;
+}
+
+.pagination-container button.active {
+    background-color: var(--icloud-accent-blue);
+    color: #fff;
+    border-color: var(--icloud-accent-blue);
+    font-weight: 600;
+}
+
+.pagination-container button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+
 /* --- 3. 모바일 반응형 스타일 --- */
 @media (max-width: 767px) {
     .container {
