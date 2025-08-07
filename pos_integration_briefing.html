@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>하이오더 POS 연동 브리핑</title>
+    <link rel="stylesheet" href="css/icloud_inspired_style.css">
+     <style>
+        .code-block {
+            background-color: #f5f5f7;
+            border: 1px solid var(--icloud-border);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 10px;
+            font-family: 'SF Mono', Consolas, 'Courier New', monospace;
+            font-size: 0.9em;
+            text-align: left;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">하이오더매니저</a></li>
+                <li><a href="search.html">하이오더 매뉴얼</a></li>
+                <li><a href="voc.html">하이오더 VOC</a></li>
+                <li><a href="materials.html" class="active">하이오더 관련 지식</a></li>
+                <li><a href="exam_materials.html">하이오더마스터 시험자료</a></li>
+                <li><a href="related_sites.html">하이오더 관련 사이트</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="container">
+            <a href="materials.html" class="back-link">&larr; 자료실로 돌아가기</a>
+            <div class="detail-card">
+                <h1 class="detail-sub-category">하이오더-POS 연동 API 요약</h1>
+                <p class="detail-sub-item">시스템 간 연동을 위한 필수 API 및 데이터 흐름 요약</p>
+
+                <div class="detail-field-group">
+                    <h2 class="detail-field-title">1. 연동 방식 및 기본 원칙</h2>
+                    <ul>
+                        <li><strong>연동 방식:</strong> 웹(POST) 또는 소켓(TCP/IP) 중 최초 1회 선택 (변경 불가)</li>
+                        <li><strong>포트:</strong> 8090</li>
+                        <li><strong>API 구분:</strong> '필수' API는 반드시 개발 필요</li>
+                    </ul>
+                </div>
+
+                <div class="detail-field-group">
+                    <h2 class="detail-field-title">2. 데이터 흐름: 하이오더 → 매장 POS</h2>
+                    <p>하이오더가 POS에 초기 데이터를 요청하고, 주문 정보를 전송합니다.</p>
+                    <div class="description-table">
+                        <table>
+                            <tr><th>상품/옵션/테이블 정보 요청</th><td><code>goods_group_list</code>, <code>goods_data_list</code>, <code>option_group_list</code>, <code>option_data_list</code>, <code>table_data_list</code><br><strong>(주의)</strong> 터치키에 등록된 사용중인 데이터만 전송해야 합니다.</td></tr>
+                            <tr><th>콜백 URL 등록</th><td><code>call_back_url</code><br>POS에서 발생하는 이벤트를 하이오더로 알리기 위한 URL을 등록합니다.</td></tr>
+                            <tr><th>주문 등록 (필수)</th><td><code>order_reg</code><br><strong>(중요)</strong> POS는 상품 적재 완료 후 응답해야 하며, 중복 주문을 반드시 검증해야 합니다.</td></tr>
+                             <tr><th>기타</th><td><code>cash_receipt_reg</code>, <code>order_list</code>, <code>order_cancel</code> (선불 전용)</td></tr>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="detail-field-group">
+                    <h2 class="detail-field-title">3. 데이터 흐름: 매장 POS → 하이오더 (콜백)</h2>
+                    <p>POS에서 발생한 이벤트를 등록된 콜백 URL로 하이오더 서버에 전송합니다.</p>
+                     <ul>
+                        <li><strong>주문 취소/실패 (필수):</strong> <code>order_cancel</code>, <code>order_false</code></li>
+                        <li><strong>자동 퇴장 처리 (필수):</strong> 계산 완료(<code>table_out</code>) 또는 자리 이동(<code>table_move</code>) 시 호출</li>
+                        <li><strong>기타 (선택):</strong> <code>pos_order_num_reset</code>, <code>goods_stock</code>, <code>pos_menu_restart</code></li>
+                    </ul>
+                </div>
+                 <div class="detail-field-group">
+                    <h2 class="detail-field-title">결론</h2>
+                    <p class="detail-field-content">성공적인 연동을 위해서는 중복 주문 검증, 선불/후불 처리 방식에 대한 명확한 이해, 그리고 POS에서 발생하는 이벤트를 하이오더로 정확히 전달하는 콜백 기능 구현이 핵심입니다.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2025 Hiorder Master Certification Training Center. All rights reserved.</p>
+    </footer>
+</body>
+</html>
