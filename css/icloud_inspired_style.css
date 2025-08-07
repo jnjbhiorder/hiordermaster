@@ -372,6 +372,40 @@ footer {
     opacity: 0.5;
 }
 
+/* --- 검색 결과 리스트 스타일 추가 --- */
+.results-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 800px; /* 리스트 뷰의 너비 조정 */
+    margin: 20px auto 0; /* 위쪽 여백 추가 및 중앙 정렬 */
+}
+
+.result-list-item {
+    background-color: var(--icloud-card-bg);
+    border-radius: 12px;
+    padding: 20px 25px;
+    text-align: left;
+    border: 1px solid var(--icloud-border);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.result-list-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* 리스트 아이템 내부의 경로 스타일 재정의 */
+.result-list-item .card-path {
+    font-size: 1rem;
+    color: var(--icloud-text-primary);
+    margin: 0;
+    padding: 0;
+    border: none;
+    word-break: break-all;
+}
 
 /* --- 3. 모바일 반응형 스타일 --- */
 @media (max-width: 767px) {
