@@ -75,6 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <h3 style="font-size: 1.8rem; font-weight: 600; margin-bottom: 20px;">${data.podcastTitle}</h3>
                 <div class="audio-player">
                     <p><strong>월간 VOC 분석 팟캐스트</strong></p>
+
                     <audio controls><source src="${data.podcastSrc}" type="audio/mpeg"></audio>
                 </div>
                 <hr class="divider">
@@ -107,4 +108,3 @@ document.addEventListener('DOMContentLoaded', () => {
         renderContent();
     }
 });
-
