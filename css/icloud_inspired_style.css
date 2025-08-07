@@ -410,4 +410,55 @@ footer {
     .board-table th, .board-table td {
         padding: 12px 15px; /* 모바일에서 셀 패딩을 살짝 줄임 */
     }
+/* 커스텀 오디오 플레이어 스타일 */
+        .audio-player {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 10px 15px;
+            background-color: #f0f0f5;
+            border-radius: 10px;
+        }
+        #playPauseBtn {
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            padding: 0;
+            line-height: 1;
+            color: var(--icloud-accent-blue);
+        }
+        .progress-container {
+            flex-grow: 1;
+            background-color: #dcdce0;
+            border-radius: 5px;
+            cursor: pointer;
+            height: 8px;
+        }
+        .progress-bar {
+            background-color: var(--icloud-accent-blue);
+            width: 0%;
+            height: 100%;
+            border-radius: 5px;
+        }
+        .time-display {
+            font-size: 0.9rem;
+            color: var(--icloud-text-secondary);
+            font-family: 'SF Mono', Consolas, monospace;
+            min-width: 90px;
+        }
+        /* 버퍼링 스피너 스타일 추가 */
+        .spinner {
+            border: 3px solid #f3f3f3; /* Light grey */
+            border-top: 3px solid var(--icloud-accent-blue); /* Blue */
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
 }
