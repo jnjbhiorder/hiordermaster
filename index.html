@@ -3,37 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>하이오더매니저 가이드</title>
+    <title>영업이슈</title>
     <link rel="stylesheet" href="css/icloud_inspired_style.css">
-   
 </head>
 <body>
     <header>
         <nav>
             <ul>
-                <li><a href="index.html" class="active">하이오더매니저</a></li>
-                <li><a href="search.html">하이오더 매뉴얼</a></li>
-                <li><a href="voc.html">하이오더 VOC</a></li>
+                <li><a href="index.html" class="active">이달의 영업포인트</a></li>
+                <li><a href="guide.html">하이오더매니저</a></li>
+                <li><a href="search.html">하이오더 매뉴얼</a></li>                
+                <li><a href="voc.html">VOC 분석</a></li>
                 <li><a href="materials.html">하이오더 관련 지식</a></li>
                 <li><a href="exam_materials.html">하이오더마스터 시험자료</a></li>
-                <li><a href="related_sites.html">하이오더 관련 사이트</a></li>
+                <li><a href="related_sites.html">관련 사이트</a></li>
             </ul>
         </nav>
     </header>
     <main>
         <div class="container">
             <section class="section">
-                <h1 class="section-title">하이오더매니저 가이드</h1>
-                <p class="section-subtitle">궁금한 설정이나 기능의 키워드를 검색하거나 탭으로 필터링해보세요.</p>
-                <div class="search-container">
-                    <div class="search-box">
-                        <input type="text" id="searchInput" placeholder="예: '첫주문시', '상품 설명' 등">
+                <h1 class="section-title">이달의 영업 포인트 🗓️</h1>
+                <p class="section-subtitle">매월 업데이트되는 주요 영업 공지를 확인하세요.</p>
+                
+                <!-- 주요 이슈 슬라이더 섹션 -->
+                <div id="featured-issue-container" class="slider-container">
+                    <div class="slider-wrapper">
+                        <div class="slider-track" id="slider-track">
+                            <!-- js/issues.js에 의해 슬라이드가 여기에 동적으로 추가됩니다. -->
+                        </div>
+                    </div>
+                    <button class="slider-button prev" id="prev-slide">&#10094;</button>
+                    <button class="slider-button next" id="next-slide">&#10095;</button>
+                    <div class="slider-dots" id="slider-dots">
+                        <!-- js/issues.js에 의해 도트가 여기에 동적으로 추가됩니다. -->
                     </div>
                 </div>
-                <div id="categoryTabs" class="filter-tabs"></div>
-                <div id="resultsContainer" class="results-grid"></div>
-                <div id="noResultsMessage" class="hidden text-center">
-                    <p>검색 결과가 없습니다.</p>
+
+                <hr class="divider">
+
+                <h2 class="section-title-sub">전체 영업 포인트</h2>
+                <div id="issues-grid" class="issues-grid">
+                    <!-- js/issues.js에 의해 모든 이슈 카드가 여기에 동적으로 추가됩니다. -->
                 </div>
             </section>
         </div>
