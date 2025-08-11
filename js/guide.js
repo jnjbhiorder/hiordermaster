@@ -93,11 +93,11 @@ document.addEventListener('DOMContentLoaded', () => {
                         <div style="flex-grow: 1;">
                             <div>
                                 <p class="card-sub-category" style="color: ${subCategoryColor};">${highlightText(item['Sub Category'], query)}</p>
-                                <p class="card-item" style="color: ${itemColor};"> ㄴ ${highlightText(item['Item'], query)}</p>
-                                <p class="card-sub-item">  &nbsp;&nbsp;&nbsp;ㄴ ${highlightText(item['Sub item'], query)}</p>
+                                <p class="card-item" style="color: ${itemColor};"> ${highlightText(item['Item'], query)}</p>
+                                <p class="card-sub-item">  ${highlightText(item['Sub item'], query)}</p>
                             </div>
                             <div class="field-group">
-                                <p class="field-title">세부 내용</p>
+                                <p class="field-title">항목 설명</p>
                                 <p class="field-content">&nbsp; ${highlightText(item['Field'], query)}</p>
                             </div>
                         </div>

@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <p class="detail-sub-item"> &nbsp;&nbsp;&nbsp;ㄴ ${item['Sub item']}</p>
 
                     <div class="detail-field-group">
-                        <p class="detail-field-title">세부 내용</p>
+                        <p class="detail-field-title">항목 설명</p>
                         <p class="detail-field-content"> &nbsp; ${item['Field']}</p>
                     </div>
                     <div class="detail-field-group">
