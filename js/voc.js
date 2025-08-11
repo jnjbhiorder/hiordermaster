@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     // podcastTitle, podcastSrc는 JSON에 없으므로 임시값을 넣거나 구조를 맞춰야 합니다.
                     // 여기서는 임시로 고정된 값을 사용하겠습니다. 실제로는 JSON 구조를 맞춰주는 것이 좋습니다.
                     podcastTitle: `${month}월 VOC 분석 팟캐스트 🎧`,
-                    podcastSrc: `https://github.com/jnjbhiorder/hiordermaster/releases/download/podcastv1.0/voc${year}${month}.m4a`,
+                    podcastSrc: `podcast/voc${year}${month}.m4a`,
                     vocTitle: `${item.month} 주요 VOC 내역`,
                     vocItems: item.issues.map(issue => ({
                         category: issue.category,
@@ -108,3 +108,4 @@ document.addEventListener('DOMContentLoaded', () => {
         renderContent();
     }
 });
+
