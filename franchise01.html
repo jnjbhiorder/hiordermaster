@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>영업이지(easy)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/icloud_inspired_style.css">
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 320px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 380px;
+            }
+        }
+        .nav-btn {
+            transition: all 0.3s ease;
+        }
+        .nav-btn.active {
+            background-color: #1E40AF; /* Darker Blue */
+            color: white;
+            font-weight: 700;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .solution-tab.active {
+            background-color: #BFDBFE; /* Light Blue */
+            border-color: #1E40AF;
+            color: #1E40AF;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">이달의 영업포인트</a></li>
+                <li><a href="guide.html">하이오더매니저</a></li>
+                <li><a href="search.html">하이오더 매뉴얼</a></li>                
+                <li><a href="voc.html">VOC 분석</a></li>
+                <li><a href="materials.html" class="active">하이오더 관련 지식</a></li>
+                <li><a href="exam_materials.html">하이오더마스터 시험자료</a></li>
+                <li><a href="related_sites.html">관련 사이트</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        <a href="materials.html" class="back-link">&larr; 자료실로 돌아가기</a>
+        <section class="section">
+            <h1 class="section-title">KT 하이오더, 프랜차이즈 성공을 위한 스마트 솔루션</h1>
+            <p class="section-subtitle">단순한 주문 시스템을 넘어, 본사와 가맹점의 유기적인 연결을 통해 '통일성'과 '신속함'을 구현합니다.
+                하이오더가 제공하는 강력한 기능들을 통해 브랜드 가치를 높이고 지속가능한 성장을 경험하세요.</p>
+        </section>
+
+        <div class="container mx-auto p-4 md:p-8">
+
+        <!-- Header Section -->
+
+
+        <!-- Navigation Tabs -->
+        <nav class="flex justify-center mb-10 bg-blue-100 rounded-lg p-2 max-w-md mx-auto shadow-sm">
+            <button id="btn-hq" class="nav-btn flex-1 py-2 px-4 rounded-md text-gray-700 font-medium active">
+                본사 관점
+            </button>
+            <button id="btn-franchise" class="nav-btn flex-1 py-2 px-4 rounded-md text-gray-700 font-medium">
+                가맹점 관점
+            </button>
+        </nav>
+
+        <!-- Main Content -->
+        <main>
+            <!-- 본사 View -->
+            <div id="view-hq" class="tab-content active">
+                <section class="text-center mb-12">
+                    <h2 class="text-3xl font-bold mb-3 text-gray-800">데이터로 완성되는 통합 관리와 신속한 소통</h2>
+                    <p class="text-md text-gray-500 max-w-2xl mx-auto">본사는 전용 관리자 페이지를 통해 전 지점의 운영 현황을 한눈에 파악하고, 데이터에 기반한 전략적 의사결정을 내릴 수 있습니다.</p>
+                </section>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                    <div class="bg-white p-6 rounded-xl shadow-lg">
+                        <h3 class="text-xl font-bold mb-4 text-center">실시간 통합 대시보드 (예시)</h3>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 text-center mb-6">
+                            <div class="bg-blue-50 p-4 rounded-lg">
+                                <p class="text-sm font-semibold text-blue-800">하이오더 도입 가맹점 수</p>
+                                <p class="text-2xl font-bold">45</p>
+                            </div>
+                            <div class="bg-green-50 p-4 rounded-lg">
+                                <p class="text-sm font-semibold text-green-800">일일 주문 건수</p>
+                                <p class="text-2xl font-bold">5,551</p>
+                            </div>
+                             <div class="bg-yellow-50 p-4 rounded-lg col-span-2 sm:col-span-1">
+                                <p class="text-sm font-semibold text-yellow-800">일일 합계</p>
+                                <p class="text-2xl font-bold">77,919,600</p>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="salesChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-lg">
+                        <h3 class="text-xl font-bold mb-4 text-center">인기 메뉴 TOP 5</h3>
+                         <p class="text-center text-gray-500 text-sm mb-4">전체 가맹점의 판매 데이터를 분석하여 가장 사랑받는 메뉴를 파악하고, 재료 수급 및 마케팅 전략에 활용할 수 있습니다.</p>
+                        <div class="chart-container">
+                            <canvas id="menuChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-12">
+                     <h3 class="text-2xl font-bold mb-6 text-center">본사가 만족하는 핵심 가치</h3>
+                     <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-6">
+                         <div class="bg-white p-6 rounded-lg shadow-md">
+                            <h4 class="font-bold text-lg text-blue-800 mb-2">전 매장, 흔들림 없는 '통일성'</h4>
+                            <p class="text-gray-600">본사에서 메뉴판을 실시간으로 제어하여 모든 매장에서 통일된 브랜드 경험을 제공합니다. 고객은 어느 지점을 방문하든 동일한 퀄리티의 서비스를 경험할 수 있습니다.</p>
+                         </div>
+                         <div class="bg-white p-6 rounded-lg shadow-md">
+                            <h4 class="font-bold text-lg text-blue-800 mb-2">놓치지 않는 '신속함'과 소통</h4>
+                            <p class="text-gray-600">실시간 공지 기능으로 본사의 정책을 즉시 전파하고, 본사-하이오더 간 핫라인을 통해 요구사항을 빠르게 반영하여 운영 효율을 극대화합니다.</p>
+                         </div>
+                     </div>
+                </div>
+            </div>
+
+            <!-- Franchise View -->
+            <div id="view-franchise" class="tab-content">
+                <section class="text-center mb-12">
+                    <h2 class="text-3xl font-bold mb-3 text-gray-800">가맹점의 모든 고민, 하이오더로 해결</h2>
+                    <p class="text-md text-gray-500 max-w-2xl mx-auto">가맹점주(키맨)가 현장에서 겪는 어려움을 하이오더가 어떻게 해결하는지 직접 확인해보세요. 운영은 쉬워지고, 매출은 올라갑니다.</p>
+                </section>
+
+                <div class="max-w-5xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden md:flex">
+                    <div class="md:w-1/3 bg-gray-50 p-4 border-r border-gray-200">
+                        <h3 class="font-bold text-lg mb-4 text-center md:text-left">주요 요구사항</h3>
+                        <ul id="solution-tabs" class="space-y-2">
+                            <li><button data-target="solution-1" class="solution-tab w-full text-left p-3 rounded-md border-2 border-transparent font-medium active">신메뉴 사진 등록</button></li>
+                            <li><button data-target="solution-2" class="solution-tab w-full text-left p-3 rounded-md border-2 border-transparent font-medium">신규 매장 오픈 설정</button></li>
+                            <li><button data-target="solution-3" class="solution-tab w-full text-left p-3 rounded-md border-2 border-transparent font-medium">대기화면 광고 추가</button></li>
+                            <li><button data-target="solution-4" class="solution-tab w-full text-left p-3 rounded-md border-2 border-transparent font-medium">주문 설정 방식 제안</button></li>
+                        </ul>
+                    </div>
+                    <div id="solution-content" class="md:w-2/3 p-8">
+                        <!-- Solution content will be injected here by JS -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Hiorder Master Certification Training Center. All rights reserved.</p>
+    </footer>
+<script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Tab Navigation
+            const btnHq = document.getElementById('btn-hq');
+            const btnFranchise = document.getElementById('btn-franchise');
+            const viewHq = document.getElementById('view-hq');
+            const viewFranchise = document.getElementById('view-franchise');
+            const navButtons = [btnHq, btnFranchise];
+            const views = [viewHq, viewFranchise];
+
+            function switchView(viewToShow) {
+                views.forEach(view => view.classList.remove('active'));
+                navButtons.forEach(btn => btn.classList.remove('active'));
+
+                viewToShow.classList.add('active');
+                if(viewToShow.id === 'view-hq') {
+                    btnHq.classList.add('active');
+                } else {
+                    btnFranchise.classList.add('active');
+                }
+            }
+
+            btnHq.addEventListener('click', () => switchView(viewHq));
+            btnFranchise.addEventListener('click', () => switchView(viewFranchise));
+
+            // Chart.js Instances
+            const salesCtx = document.getElementById('salesChart').getContext('2d');
+            const salesChart = new Chart(salesCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['광주첨단점', '잠실직영점', '시청점', '내포신도시점', '신창점', '송정점'],
+                    datasets: [{
+                        label: '지점별 매출 (단위: 만원)',
+                        data: [369, 290, 278, 260, 247, 245],
+                        backgroundColor: 'rgba(30, 64, 175, 0.8)',
+                        borderColor: 'rgba(30, 64, 175, 1)',
+                        borderWidth: 1,
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        title: { display: true, text: '지점별 매출 현황 (단위 : 만원)', font: { size: 16 } }
+                    },
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+
+            const menuCtx = document.getElementById('menuChart').getContext('2d');
+            const menuChart = new Chart(menuCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['시그니처 스테이크', '트러플 파스타', '리코타치즈 샐러드', '해산물 리조또', '오늘의 스프'],
+                    datasets: [{
+                        label: '판매량',
+                        data: [300, 250, 180, 150, 90],
+                        backgroundColor: [
+                            'rgba(30, 64, 175, 0.9)',
+                            'rgba(59, 130, 246, 0.9)',
+                            'rgba(147, 197, 253, 0.9)',
+                            'rgba(191, 219, 254, 0.9)',
+                            'rgba(219, 234, 254, 0.9)'
+                        ],
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom' }
+                    }
+                }
+            });
+
+            // Franchise View Solutions
+            const solutionTabsContainer = document.getElementById('solution-tabs');
+            const solutionContentContainer = document.getElementById('solution-content');
+            
+            const solutions = {
+                'solution-1': {
+                    title: '신메뉴 사진 등록',
+                    solution: '본사 관리자 페이지에서 신메뉴 정보와 이미지를 한 번만 등록하면, 전 가맹점 태블릿 메뉴판에 즉시 적용됩니다. 개별 매장에서의 번거로운 작업이 사라집니다.',
+                    effect: '메뉴 누락을 방지하고, 통일된 고품질 이미지로 <strong>브랜드 퀄리티를 유지</strong>하며, 신메뉴 동시 출시 및 홍보가 가능해집니다.'
+                },
+                'solution-2': {
+                    title: '신규 매장 오픈 설정',
+                    solution: "'매장 복사' 기능으로 기존 매장의 모든 설정을 그대로 신규 매장에 적용할 수 있습니다. 이후, 신규 매장의 특성에 맞게 일부 메뉴나 가격만 간단히 수정하면 됩니다.",
+                    effect: '신규 매장 오픈 준비 시간을 <strong>획기적으로 단축</strong>하고, 운영 설정 오류를 최소화하며, 상권에 맞는 유연한 운영을 지원합니다.'
+                },
+                'solution-3': {
+                    title: '광고 이미지 추가',
+                    solution: '태블릿 메뉴판의 대기 화면, 이벤트 팝업 등 다양한 영역을 활용하여 본사에서 제작한 프로모션, 신메뉴 광고 이미지를 자유롭게 노출할 수 있습니다.',
+                    effect: '전 매장에서 <strong>일관된 프로모션을 진행</strong>하고, 타겟 광고를 통해 마케팅 효과를 극대화하여 추가 매출 증대를 기대할 수 있습니다.'
+                },
+                'solution-4': {
+                    title: '주문 설정 방식 제안',
+                    solution: '최소 주문 수량 설정("A메뉴는 2인분 이상"), 선행 메뉴 조건 설정("식사 메뉴는 메인 주문 시"), 다양한 세트 메뉴 구성 등 상황별 최적화된 주문 옵션을 제공합니다.',
+                    effect: '원활한 주방 운영과 재고 관리 효율화를 돕고, <strong>전략적인 메뉴 판매</strong>를 통해 객단가를 높여 수익성을 개선합니다.'
+                }
+            };
+
+            function renderSolution(targetId) {
+                const content = solutions[targetId];
+                if (!content) return;
+
+                solutionContentContainer.innerHTML = `
+                    <h4 class="text-2xl font-bold text-blue-900 mb-4">${content.title}</h4>
+                    <div class="mb-6">
+                        <p class="font-semibold text-gray-700 mb-2">💡 하이오더 솔루션</p>
+                        <p class="text-gray-600">${content.solution}</p>
+                    </div>
+                    <div>
+                        <p class="font-semibold text-gray-700 mb-2">✨ 기대 효과</p>
+                        <p class="text-gray-600">${content.effect}</p>
+                    </div>
+                `;
+            }
+
+            solutionTabsContainer.addEventListener('click', (e) => {
+                if (e.target.tagName === 'BUTTON') {
+                    const targetId = e.target.dataset.target;
+                    
+                    // Update active tab style
+                    solutionTabsContainer.querySelectorAll('.solution-tab').forEach(tab => tab.classList.remove('active'));
+                    e.target.classList.add('active');
+
+                    // Render content
+                    renderSolution(targetId);
+                }
+            });
+
+            // Initial render
+            renderSolution('solution-1');
+        });
+    </script>
+</body>
+</html>
