@@ -28,8 +28,10 @@
         }
         .gradient-text {
             background: linear-gradient(to right, #ef4444, #f97316);
-            -webkit-background-clip: text;
+            background-clip: text;              /* 표준 속성 추가 */
+            -webkit-background-clip: text;      /* Safari/Chrome 호환용 */
             -webkit-text-fill-color: transparent;
+            color: transparent;                 /* 표준 브라우저 호환을 위해 추가 */
         }
     </style>
 </head>
