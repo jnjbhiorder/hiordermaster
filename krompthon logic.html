@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PromptCraft 365 - System Logic Visualization</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #111827; /* Tailwind gray-900 */
+            color: #F9FAFB; /* Tailwind gray-50 */
+        }
+
+        .flow-card {
+            background-color: #1F2937; /* Tailwind gray-800 */
+            border: 1px solid #4B5563; /* Tailwind gray-600 */
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 10;
+        }
+
+        .flow-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+            border-color: #38BDF8; /* Tailwind sky-400 */
+        }
+        
+        .flow-card.highlight {
+            border-color: #38BDF8; /* Tailwind sky-400 */
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.5);
+        }
+
+        .flow-diamond {
+            transform: rotate(45deg);
+            width: 120px;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .flow-diamond .content {
+            transform: rotate(-45deg);
+        }
+
+        svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        line, path {
+            stroke: #4B5563; /* Tailwind gray-600 */
+            stroke-width: 2;
+            transition: stroke 0.3s ease;
+        }
+
+        line.highlight, path.highlight {
+             stroke: #38BDF8; /* Tailwind sky-400 */
+             stroke-width: 3;
+        }
+        
+        .modal {
+            background-color: rgba(17, 24, 39, 0.8);
+            backdrop-filter: blur(5px);
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+    <div class="container mx-auto p-4 md:p-8">
+        <header class="text-center mb-12">
+            <h1 class="text-3xl md:text-4xl font-bold text-white">PromptCraft 365</h1>
+            <p class="text-lg text-gray-400 mt-2">인터랙티브 시스템 로직 시각화</p>
+        </header>
+
+        <div id="flow-container" class="relative min-h-screen">
+            <svg id="flow-svg"></svg>
+            
+            <!-- Start & User Check -->
+            <div id="start" class="flow-card rounded-lg p-4 w-48 text-center mx-auto cursor-pointer" data-title="시작" data-description="사용자가 PromptCraft 365 에이전트를 실행합니다. 모든 프로세스는 여기서 시작됩니다.">
+                🚀 에이전트 실행
+            </div>
+            
+            <div id="check-db" class="flow-card flow-diamond mx-auto mt-24 cursor-pointer" data-title="사용자 구분" data-description="시스템은 User Profile DB를 확인하여 사용자의 정보가 저장되어 있는지 확인합니다. 이를 통해 최초 사용자와 기존 사용자를 구분합니다.">
+                <div class="content text-center text-sm">User Profile<br>존재?</div>
+            </div>
+
+            <!-- Flow 1: New User Onboarding -->
+            <div class="mt-24">
+                <p class="text-center text-sky-400 font-bold mb-4">- 최초 사용자 (Onboarding) -</p>
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-y-24 md:gap-y-0 md:gap-x-8 items-center">
+                    <div id="survey" class="flow-card rounded-lg p-4 text-center cursor-pointer" data-title="1. 선호도 조사" data-description="사용자의 글쓰기 스타일을 파악하기 위해 A/B 테스트 형식의 설문을 진행합니다. (격식, 어조, 구조, 어휘)">A/B 테스트 설문</div>
+                    <div id="consent" class="flow-card rounded-lg p-4 text-center cursor-pointer" data-title="2. 데이터 접근 동의" data-description="개인화 시스템 프롬프트 생성을 위해 M365 데이터(이메일/문서) 접근에 대한 사용자 동의를 받습니다.">M365 접근 동의</div>
+                    <div id="analysis" class="flow-card rounded-lg p-4 text-center cursor-pointer" data-title="3. 데이터 분석" data-description="사용자가 동의하면, MS Graph API를 통해 최근 3개월간의 이메일 및 문서를 분석하여 암묵적인 글쓰기 패턴을 추출합니다.">데이터 분석</div>
+                    <div id="generate" class="flow-card rounded-lg p-4 text-center bg-sky-900/50 border-sky-500 cursor-pointer" data-title="4. 시스템 프롬프트 생성 (핵심)" data-description="설문 결과(명시적 선호)와 데이터 분석(암묵적 패턴)을 결합하여 사용자에게 최적화된 개인화 시스템 프롬프트를 생성합니다.">✨ 시스템 프롬프트 생성</div>
+                    <div id="save" class="flow-card rounded-lg p-4 text-center cursor-pointer" data-title="5. 프로필 저장" data-description="생성된 시스템 프롬프트를 User Profile DB에 안전하게 저장하여 다음 실행부터 즉시 사용할 수 있도록 합니다.">DB에 저장</div>
+                </div>
+            </div>
+
+             <!-- Flow 2: Existing User Prompt Processing -->
+            <div class="mt-32">
+                 <p class="text-center text-emerald-400 font-bold mb-4">- 기존 사용자 (Prompt 처리) -</p>
+                 <div class="grid grid-cols-1 md:grid-cols-3 gap-y-24 md:gap-y-0 md:gap-x-8 items-center">
+                    <div id="load" class="flow-card rounded-lg p-4 text-center cursor-pointer" data-title="1. 시스템 프롬프트 로드" data-description="DB에 저장된 사용자의 개인화 시스템 프롬프트를 즉시 불러옵니다.">DB에서 프롬프트 로드</div>
+                    <div id="input" class="flow-card rounded-lg p-4 text-center cursor-pointer" data-title="2. 프롬프트 입력" data-description="사용자는 평소처럼 자연스럽게 AI에게 요청할 프롬프트를 입력합니다.">사용자 프롬프트 입력</div>
+                    <div id="process" class="flow-card rounded-lg p-4 text-center bg-emerald-900/50 border-emerald-500 cursor-pointer" data-title="3. 프롬프트 병렬 처리 (핵심)" data-description="입력된 프롬프트를 [원본]과 [시스템 프롬프트+원본] 두 경로로 나누어 AI 모델에 동시에 요청합니다.">⚡ 프롬프트 병렬 처리</div>
+                 </div>
+                 <div class="mt-24 grid grid-cols-1 md:grid-cols-2 gap-8 md:w-2/3 mx-auto">
+                     <div id="call-a" class="flow-card rounded-lg p-4 text-center cursor-pointer" data-title="Call A (원본)" data-description="사용자가 입력한 원본 프롬프트를 그대로 AI 모델에 전달하여 결과물을 생성합니다.">Call A: 원본 프롬프트</div>
+                     <div id="call-b" class="flow-card rounded-lg p-4 text-center cursor-pointer" data-title="Call B (개선)" data-description="개인화 시스템 프롬프트와 원본 프롬프트를 결합하여 AI 모델에 전달합니다. 이를 통해 사용자 맞춤형 결과물을 생성합니다.">Call B: 개선된 프롬프트</div>
+                 </div>
+                 <div id="result" class="flow-card rounded-lg p-6 text-center mt-24 md:w-1/2 mx-auto cursor-pointer" data-title="최종 결과" data-description="두 AI의 결과물을 좌/우로 나란히 비교하여 보여줍니다. 사용자는 두 결과물을 비교하며 자연스럽게 좋은 프롬프트의 원리를 학습하게 됩니다.">결과 비교 UI 표시</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal -->
+    <div id="modal" class="fixed inset-0 z-50 items-center justify-center hidden">
+        <div class="modal absolute inset-0"></div>
+        <div class="relative w-11/12 max-w-md bg-gray-800 rounded-lg shadow-lg p-6 border border-gray-600">
+            <h3 id="modal-title" class="text-xl font-bold text-sky-400 mb-2"></h3>
+            <p id="modal-description" class="text-gray-300"></p>
+            <button id="modal-close" class="absolute top-4 right-4 text-gray-400 hover:text-white">&times;</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const svg = document.getElementById('flow-svg');
+            const container = document.getElementById('flow-container');
+            
+            const connections = [
+                // Start to Check
+                { from: 'start', to: 'check-db', type: 'line', style: 'straight' },
+                
+                // Onboarding Path
+                { from: 'check-db', to: 'survey', type: 'path', style: 'elbow-left', text: 'NO' },
+                { from: 'survey', to: 'consent', type: 'line', style: 'straight' },
+                { from: 'consent', to: 'analysis', type: 'line', style: 'straight' },
+                { from: 'analysis', to: 'generate', type: 'line', style: 'straight' },
+                { from: 'generate', to: 'save', type: 'line', style: 'straight' },
+                
+                // Existing User Path
+                { from: 'check-db', to: 'load', type: 'path', style: 'elbow-right', text: 'YES' },
+                { from: 'load', to: 'input', type: 'line', style: 'straight' },
+                { from: 'input', to: 'process', type: 'line', style: 'straight' },
+                { from: 'process', to: 'call-a', type: 'path', style: 'split-left' },
+                { from: 'process', to: 'call-b', type: 'path', style: 'split-right' },
+                { from: 'call-a', to: 'result', type: 'path', style: 'merge-left' },
+                { from: 'call-b', to: 'result', type: 'path', style: 'merge-right' },
+            ];
+
+            function getElCenter(el) {
+                const rect = el.getBoundingClientRect();
+                const containerRect = container.getBoundingClientRect();
+                return {
+                    x: rect.left - containerRect.left + rect.width / 2,
+                    y: rect.top - containerRect.top + rect.height / 2,
+                    top: { x: rect.left - containerRect.left + rect.width / 2, y: rect.top - containerRect.top },
+                    bottom: { x: rect.left - containerRect.left + rect.width / 2, y: rect.bottom - containerRect.top },
+                    left: { x: rect.left - containerRect.left, y: rect.top - containerRect.top + rect.height / 2 },
+                    right: { x: rect.right - containerRect.left, y: rect.top - containerRect.top + rect.height / 2 },
+                };
+            }
+
+            function drawLines() {
+                svg.innerHTML = ''; // Clear previous lines
+                const marker = document.createElementNS('http://www.w3.org/2000/svg', 'marker');
+                marker.setAttribute('id', 'arrow');
+                marker.setAttribute('viewBox', '0 0 10 10');
+                marker.setAttribute('refX', '8');
+                marker.setAttribute('refY', '5');
+                marker.setAttribute('markerWidth', '6');
+                marker.setAttribute('markerHeight', '6');
+                marker.setAttribute('orient', 'auto-start-reverse');
+                const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                path.setAttribute('d', 'M 0 0 L 10 5 L 0 10 z');
+                path.setAttribute('fill', '#4B5563');
+                marker.appendChild(path);
+                
+                const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+                defs.appendChild(marker);
+                svg.appendChild(defs);
+
+                connections.forEach(conn => {
+                    const fromEl = document.getElementById(conn.from);
+                    const toEl = document.getElementById(conn.to);
+                    if (!fromEl || !toEl) return;
+
+                    const from = getElCenter(fromEl);
+                    const to = getElCenter(toEl);
+                    
+                    let line;
+                    if (conn.type === 'line') {
+                        line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                        line.setAttribute('x1', from.bottom.x);
+                        line.setAttribute('y1', from.bottom.y);
+                        line.setAttribute('x2', to.top.x);
+                        line.setAttribute('y2', to.top.y);
+                    } else { // path for elbows
+                        line = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                        let pathData;
+                        const midY = from.y + (to.y - from.y) / 2;
+                        
+                        switch(conn.style) {
+                            case 'elbow-left':
+                                pathData = `M ${from.left.x} ${from.left.y} L ${to.right.x} ${to.right.y}`;
+                                break;
+                            case 'elbow-right':
+                                pathData = `M ${from.right.x} ${from.right.y} L ${to.left.x} ${to.left.y}`;
+                                break;
+                            case 'split-left':
+                                pathData = `M ${from.bottom.x} ${from.bottom.y} V ${midY} H ${to.top.x} V ${to.top.y}`;
+                                break;
+                             case 'split-right':
+                                pathData = `M ${from.bottom.x} ${from.bottom.y} V ${midY} H ${to.top.x} V ${to.top.y}`;
+                                break;
+                            case 'merge-left':
+                                pathData = `M ${from.bottom.x} ${from.bottom.y} V ${midY} H ${to.top.x} V ${to.top.y}`;
+                                break;
+                            case 'merge-right':
+                                pathData = `M ${from.bottom.x} ${from.bottom.y} V ${midY} H ${to.top.x} V ${to.top.y}`;
+                                break;
+                            default:
+                                line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                                line.setAttribute('x1', from.bottom.x); line.setAttribute('y1', from.bottom.y);
+                                line.setAttribute('x2', to.top.x); line.setAttribute('y2', to.top.y);
+
+                        }
+                        if (pathData) {
+                            line.setAttribute('d', pathData);
+                            line.setAttribute('fill', 'none');
+                        }
+                    }
+                    
+                    line.setAttribute('marker-end', 'url(#arrow)');
+                    line.id = `line-${conn.from}-${conn.to}`;
+                    svg.appendChild(line);
+                });
+            }
+
+            const cards = document.querySelectorAll('.flow-card');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    const fromId = card.id;
+                    connections.forEach(conn => {
+                        if (conn.from === fromId || conn.to === fromId) {
+                           document.getElementById(`line-${conn.from}-${conn.to}`)?.classList.add('highlight');
+                           document.getElementById(conn.from)?.classList.add('highlight');
+                           document.getElementById(conn.to)?.classList.add('highlight');
+                        }
+                    });
+                });
+                card.addEventListener('mouseleave', () => {
+                    document.querySelectorAll('.highlight').forEach(el => el.classList.remove('highlight'));
+                });
+                
+                // Modal logic
+                card.addEventListener('click', () => {
+                    document.getElementById('modal-title').innerText = card.dataset.title;
+                    document.getElementById('modal-description').innerText = card.dataset.description;
+                    document.getElementById('modal').style.display = 'flex';
+                });
+            });
+
+            const modal = document.getElementById('modal');
+            const modalClose = document.getElementById('modal-close');
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal || e.target === modalClose) {
+                    modal.style.display = 'none';
+                }
+            });
+
+            window.addEventListener('resize', drawLines);
+            // Use a timeout to ensure all elements are rendered before drawing
+            setTimeout(drawLines, 100); 
+        });
+    </script>
+</body>
+</html>
